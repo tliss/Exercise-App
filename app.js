@@ -11,11 +11,10 @@ app.engine('handlebars', handlebars.engine);
 //Lets us ignore .handlebars extensions
 app.set('view engine', 'handlebars');
 
-app.set('port', 3000);
+app.set('port', 8080);
 
 //*****Main Page*************
 app.get('/',function(req,res){
-    res.type('text/plain');
     //Handlebars will render the contents of home.handlebars inside of main.handlebars' {{{body}}} tag
     res.render('home');
 });
