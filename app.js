@@ -19,7 +19,7 @@ var mysql = require('./mysql.js');
 
 app.set('port', 8080);
 
-//*****Main Page*************
+//*****GET Requests*************
 
 app.get('/',function(req,res,next){
   var context = {};
@@ -29,23 +29,15 @@ app.get('/',function(req,res,next){
       return;
     }
     
-    context.results = JSON.stringify(rows);
-    console.log("\n------------------\ncontext is\n------------------")
-    console.log(JSON.stringify(context, null, 4));
+//    context.results = JSON.stringify(rows);
+//    console.log("\n------------------\ncontext is\n------------------")
+//    console.log(JSON.stringify(context, null, 4));
     
     context.rows = rows;
-    console.log("\n------------------\nrows is\n------------------")
-    console.log(JSON.stringify(rows, null, 4));
-    
-    console.log("\n------------------\ncontext.rows is\n------------------")
-    console.log(JSON.stringify(context.rows, null, 4));
+//    console.log("\n------------------\nrows is\n------------------")
+//    console.log(JSON.stringify(rows, null, 4));
     
     //console.log(rows[0].id);
-    
-//    for (var i = 0; i < context.results.length; i++) {
-//        var name = context.results[i].name;
-//        context.script += "<script></script>"
-//    }
     
     res.render('home', context);
   });
@@ -68,6 +60,56 @@ app.get('/reset-table',function(req,res,next){
   });
 });
 
+//*****POST Requests*********
+app.post('/',function(req,res){
+  var context = {};
+  
+  if(req.body['test']){
+      console.log('hello');
+//    function deleteRow(tableID,currentRow) {
+//        var table = document.getElementById(tableID);
+//          var rowCount = table.rows.length;
+//          for (var i = 0; i < rowCount; i++) {
+//              var row = table.rows[i];
+//
+//              if (row===currentRow.parentNode.parentNode) {
+//                  if (rowCount <= 1) {
+//                      alert("Cannot delete all the rows.");
+//                      break;
+//                  }
+//                  table.deleteRow(i);
+//                  rowCount--;
+//                  i--;
+//              }
+//          }
+//      }
+  }
+});
+//*****Other functions********
+
+function deleteRow(tableID, currentRow) {
+    try {
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        for (var i = 0; i < rowCount; i++) {
+            var row = table.rows[i];
+            
+            if (row===currentRow.parentNode.parentNode) {
+                if (rowCount <= 1) {
+                    alert("Cannot delete all the rows.");
+                    break;
+                }
+                table.deleteRow(i);
+                rowCount--;
+                i--;
+            }
+        }
+    } catch (e) {
+        alert(e);
+    }
+    //getValues();
+}
+
 //*****Error Handling********
 app.use(function(req,res){
     res.type('text/plain');
@@ -86,3 +128,4 @@ app.use(function(err, req, res, next){
 app.listen(app.get('port'), function(){
     console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
 });
+

@@ -9,14 +9,13 @@
 <h1>MySQL Results:</h1>
 <p>{{results}}</p>
 
-<table>
+<table id="dataTable">
     <tr>
         <th>Name</th>
         <th>Reps</th>
         <th>Weight</th>
         <th>Date</th>
         <th>lbs?</th>
-        <th> </th>
     </tr>
     {{#each rows}}
     <tr>
@@ -25,9 +24,21 @@
         <td>{{weight}}</td>
         <td>{{moment date format="MM-DD-YYYY"}}</td>
         <td>{{lbs}}</td>
-        <td>Delete</td>
+<!--        <td>
+            <input type="button" value="Delete" onclick="deleteRow('dataTable', this)" />
+	</td>-->
+        <td>
+            <form method="post">
+                <!--<input type="hidden" name="id" value="{{this.id}}">-->
+                <input type="submit" name="Delete2" value="Delete2">
+            </form>
+	</td>
     </tr>
     {{/each}}
 </table>
+
+<form method="post">
+    <input type="submit" name="test" value="test">
+</form>
 
 {{{script}}}
