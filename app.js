@@ -12,6 +12,8 @@ app.engine('handlebars', handlebars.engine);
 //Lets us ignore .handlebars extensions
 app.set('view engine', 'handlebars');
 
+var helpers = require('handlebars-helpers')();
+
 //*****MySQL stuff******
 var mysql = require('./mysql.js');
 
@@ -26,15 +28,19 @@ app.get('/',function(req,res,next){
       next(err);
       return;
     }
+    
     context.results = JSON.stringify(rows);
-    
-    context.rows = rows;
-    
     console.log("\n------------------\ncontext is\n------------------")
     console.log(JSON.stringify(context, null, 4));
+    
+    context.rows = rows;
     console.log("\n------------------\nrows is\n------------------")
     console.log(JSON.stringify(rows, null, 4));
-    console.log(rows[0].id);
+    
+    console.log("\n------------------\ncontext.rows is\n------------------")
+    console.log(JSON.stringify(context.rows, null, 4));
+    
+    //console.log(rows[0].id);
     
 //    for (var i = 0; i < context.results.length; i++) {
 //        var name = context.results[i].name;
@@ -53,7 +59,7 @@ app.get('/reset-table',function(req,res,next){
     "name VARCHAR(255) NOT NULL,"+
     "reps INT,"+
     "weight INT,"+
-    "date DATE,"+
+    "date DATE DEFAULT GETDATE(),"+
     "lbs BOOLEAN)";
     mysql.pool.query(createString, function(err){
       context.results = "Table reset";
