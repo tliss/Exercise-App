@@ -16,7 +16,18 @@
         <th>Weight</th>
         <th>Date</th>
         <th>lbs?</th>
+        <th> </th>
     </tr>
+    {{#each rows}}
     <tr>
+        <td>{{name}}</td>
+        <td>{{reps}}</td>
+        <td>{{weight}}</td>
+        <td>{{date}}</td>
+        <td>{{lbs}}</td>
+        <td>Delete</td>
     </tr>
+    {{/each}}
 </table>
+
+{{{script}}}

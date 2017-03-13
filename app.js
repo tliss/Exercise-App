@@ -1,6 +1,7 @@
 //*****Express stuff*********
 var express = require('express');
 var app = express();
+app.use(express.static('public'));
 
 //*****Handlebars stuff******
 //Create instance of handlebars let it know default layout is 'main'
@@ -27,9 +28,18 @@ app.get('/',function(req,res,next){
     }
     context.results = JSON.stringify(rows);
     
-    for (var i = 0; i < context.results.length; i++) {
-        
-    }
+    context.rows = rows;
+    
+    console.log("\n------------------\ncontext is\n------------------")
+    console.log(JSON.stringify(context, null, 4));
+    console.log("\n------------------\nrows is\n------------------")
+    console.log(JSON.stringify(rows, null, 4));
+    console.log(rows[0].id);
+    
+//    for (var i = 0; i < context.results.length; i++) {
+//        var name = context.results[i].name;
+//        context.script += "<script></script>"
+//    }
     
     res.render('home', context);
   });
