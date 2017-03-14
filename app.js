@@ -13,6 +13,8 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 var helpers = require('handlebars-helpers')();
+var moment = require('moment');
+
 
 //*****MySQL stuff******
 var mysql = require('./mysql.js');
@@ -29,9 +31,6 @@ app.get('/',function(req,res,next){
 
 app.get('/notify',function(reg,res,next){
     var payload = {};
-    console.log('I got a GET request! ');
-    
-   
     
     mysql.pool.query("SELECT * FROM exercises", function(err, rows, fields){
         if (err){
@@ -39,6 +38,10 @@ app.get('/notify',function(reg,res,next){
             return;
         }
         payload.rows = rows;
+        
+        for (var row of payload.rows){
+            row.date = moment(row.date).format('MM/DD/YYYY');
+        }
     
         res.send(JSON.stringify(payload));
     });

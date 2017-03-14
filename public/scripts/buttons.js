@@ -41,7 +41,6 @@ function bindButtons(){
                 
                 var table = document.getElementById('myTable');
                 
-                
                 for (var row of response.rows){
                     var newId = document.createElement("td");
                     var newName = document.createElement("td");
@@ -69,7 +68,6 @@ function bindButtons(){
                     table.appendChild(newRow);
                 }
                 
-                console.log(response.rows);
                 document.getElementById('test').textContent=response.rows;
             }
             else {
