@@ -40,14 +40,16 @@ function bindButtons(){
                 var response = JSON.parse(req.responseText);
                 
                 var table = document.getElementById('myTable');
-                var newId = document.createElement("td");
-                var newName = document.createElement("td");
-                var newReps = document.createElement("td");
-                var newWeight = document.createElement("td");
-                var newDate = document.createElement("td");
-                var newLbs = document.createElement("td");
+                
                 
                 for (var row of response.rows){
+                    var newId = document.createElement("td");
+                    var newName = document.createElement("td");
+                    var newReps = document.createElement("td");
+                    var newWeight = document.createElement("td");
+                    var newDate = document.createElement("td");
+                    var newLbs = document.createElement("td");
+                    
                     newId.textContent = row.id;
                     newName.textContent = row.name;
                     newReps.textContent = row.reps;
