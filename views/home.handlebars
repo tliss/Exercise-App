@@ -1,38 +1,15 @@
 <h1>Taylor's Workout Tracker</h1>
 
-<a href="http://localhost:8080/">Home Page</a>
-</br>
-<a href="http://localhost:8080/insert?c=Demo+Task">Insert demo</a>
-</br>
-<a href="http://localhost:8080/reset-table/">Reset Table</a>
+<!--<form method="post"> 
+    <input type="hidden" name="id" value="{{this.id}}">
+    <input type="button" value="Delete" onclick="deleteRow('dataTable', this)" />
+</form>-->
 
-<h1>MySQL Results:</h1>
-<p>{{results}}</p>
+<form method="get">
+    <button type="submit">GET Request</button>
+</form>
 
-<table id="dataTable">
-    <tr>
-        <th>Name</th>
-        <th>Reps</th>
-        <th>Weight</th>
-        <th>Date</th>
-        <th>lbs?</th>
-    </tr>
-    {{#each rows}}
-    <tr>
-        <td>{{name}}</td>
-        <td>{{reps}}</td>
-        <td>{{weight}}</td>
-        <td>{{moment date format="MM-DD-YYYY"}}</td>
-        <td>{{lbs}}</td>
-        <td>
-            <form method="post"> 
-                <input type="hidden" name="id" value="{{this.id}}">
-                <input type="button" value="Delete" onclick="deleteRow('dataTable', this)" />
-            </form>
-	</td>
-    </tr>
-    {{/each}}
-</table>
+<button onclick="runTest()">Run JavaScript</button>
 
 <!--/*Hidden fields will be key to deleting and updating data. 
 Every row should have a form (or two froms) holding the update 

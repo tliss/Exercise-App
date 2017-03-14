@@ -19,28 +19,18 @@ var mysql = require('./mysql.js');
 
 app.set('port', 8080);
 
-//*****GET Requests*************
+//*****GET Routes*************
 
 app.get('/',function(req,res,next){
     var context = {};
-    mysql.pool.query('SELECT * FROM exercises', function(err, rows, fields){
-    if(err){
-      next(err);
-      return;
-    }
-    
-//    context.results = JSON.stringify(rows);
-//    console.log("\n------------------\ncontext is\n------------------")
-//    console.log(JSON.stringify(context, null, 4));
-    
-    context.rows = rows;
-//    console.log("\n------------------\nrows is\n------------------")
-//    console.log(JSON.stringify(rows, null, 4));
-    
-    //console.log(rows[0].id);
-    
+
+    console.log('hello from inside GET');
+
     res.render('home', context);
-  });
+});
+
+app.get('/insert',function(reg,res,next){
+    
 });
 
 app.get('/reset-table',function(req,res,next){
@@ -65,48 +55,6 @@ app.post('/',function(req,res){
 
 
 });
-
-//        var table = document.getElementById(tableID);
-//          var rowCount = table.rows.length;
-//          for (var i = 0; i < rowCount; i++) {
-//              var row = table.rows[i];
-//
-//              if (row===currentRow.parentNode.parentNode) {
-//                  if (rowCount <= 1) {
-//                      alert("Cannot delete all the rows.");
-//                      break;
-//                  }
-//                  table.deleteRow(i);
-//                  rowCount--;
-//                  i--;
-//              }
-//          }
-//      }
-
-//*****Other functions********
-
-//function deleteRow(tableID, currentRow) {
-//    try {
-//        var table = document.getElementById(tableID);
-//        var rowCount = table.rows.length;
-//        for (var i = 0; i < rowCount; i++) {
-//            var row = table.rows[i];
-//            
-//            if (row===currentRow.parentNode.parentNode) {
-//                if (rowCount <= 1) {
-//                    alert("Cannot delete all the rows.");
-//                    break;
-//                }
-//                table.deleteRow(i);
-//                rowCount--;
-//                i--;
-//            }
-//        }
-//    } catch (e) {
-//        alert(e);
-//    }
-//    //getValues();
-//}
 
 //*****Error Handling********
 app.use(function(req,res){
