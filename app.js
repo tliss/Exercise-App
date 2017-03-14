@@ -22,8 +22,8 @@ app.set('port', 8080);
 //*****GET Requests*************
 
 app.get('/',function(req,res,next){
-  var context = {};
-  mysql.pool.query('SELECT * FROM exercises', function(err, rows, fields){
+    var context = {};
+    mysql.pool.query('SELECT * FROM exercises', function(err, rows, fields){
     if(err){
       next(err);
       return;
@@ -62,11 +62,10 @@ app.get('/reset-table',function(req,res,next){
 
 //*****POST Requests*********
 app.post('/',function(req,res){
-  var context = {};
-  
-  if(req.body['test']){
-      console.log('hello');
-//    function deleteRow(tableID,currentRow) {
+
+
+});
+
 //        var table = document.getElementById(tableID);
 //          var rowCount = table.rows.length;
 //          for (var i = 0; i < rowCount; i++) {
@@ -83,32 +82,31 @@ app.post('/',function(req,res){
 //              }
 //          }
 //      }
-  }
-});
+
 //*****Other functions********
 
-function deleteRow(tableID, currentRow) {
-    try {
-        var table = document.getElementById(tableID);
-        var rowCount = table.rows.length;
-        for (var i = 0; i < rowCount; i++) {
-            var row = table.rows[i];
-            
-            if (row===currentRow.parentNode.parentNode) {
-                if (rowCount <= 1) {
-                    alert("Cannot delete all the rows.");
-                    break;
-                }
-                table.deleteRow(i);
-                rowCount--;
-                i--;
-            }
-        }
-    } catch (e) {
-        alert(e);
-    }
-    //getValues();
-}
+//function deleteRow(tableID, currentRow) {
+//    try {
+//        var table = document.getElementById(tableID);
+//        var rowCount = table.rows.length;
+//        for (var i = 0; i < rowCount; i++) {
+//            var row = table.rows[i];
+//            
+//            if (row===currentRow.parentNode.parentNode) {
+//                if (rowCount <= 1) {
+//                    alert("Cannot delete all the rows.");
+//                    break;
+//                }
+//                table.deleteRow(i);
+//                rowCount--;
+//                i--;
+//            }
+//        }
+//    } catch (e) {
+//        alert(e);
+//    }
+//    //getValues();
+//}
 
 //*****Error Handling********
 app.use(function(req,res){
