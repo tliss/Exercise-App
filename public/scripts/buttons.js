@@ -31,6 +31,8 @@ function bindButtons(){
     document.getElementById('Submit').addEventListener('click', function(event){
             
         var req = new XMLHttpRequest();
+        var payload = {};
+        payload.name = document.getElementById('name').value;
         
         req.open("GET", "http://localhost:8080/notify", true);
         
@@ -58,7 +60,7 @@ function bindButtons(){
                     
                     var newRow = document.createElement("tr");
                     
-                    //ADD IN: newRow.appendChild(newId);
+                    newRow.appendChild(newId);
                     newRow.appendChild(newName);
                     newRow.appendChild(newReps);
                     newRow.appendChild(newWeight);
@@ -67,8 +69,6 @@ function bindButtons(){
                     
                     table.appendChild(newRow);
                 }
-                
-                document.getElementById('test').textContent=response.rows;
             }
             else {
                 console.log("Error in network request: " + req.statusText);

@@ -5,3 +5,22 @@ table {
 table, th, td {
     border: 1px solid black;
 }
+
+label {
+    width: 47px;
+    display: inline-block;
+    padding-bottom: 5px;
+    text-align: right;
+}
+
+fieldset {
+    width: 250px;
+}
+
+#submitContainer {
+    text-align: center;
+}
+
+#Submit {
+    margin-top: 3px;
+}

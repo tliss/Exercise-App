@@ -1,9 +1,30 @@
-<input type="submit" id="Submit">
-
-<span>Test:</span><span id="test"></span>
-
+<!--<input type="submit" id="Submit">-->
+<form>
+    <fieldset>
+        <legend>New Exercise</legend>
+        
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name">
+        <br>
+        <label for="reps">Reps</label>
+        <input type="text" name="reps" id="reps">
+        <br>
+        <label for="weight">Weight</label>
+        <input type="text" name="reps" id="weight">
+        <br>
+        <label for="date">Date</label>
+        <input type="text" name="date" id="date">
+        <br>
+        <label for="lbs">Lbs</label>
+        <input type="text" name="lbs" id="lbs">
+        <br>
+        <div id="submitContainer"><input type="submit" id="Submit"></div>
+    </fieldset>
+</form>
+<br>
 <table id="myTable">
     <tr>
+        <th>ID</th>
         <th>Name</th>
         <th>Reps</th>
         <th>Weight</th>
@@ -12,46 +33,17 @@
     </tr>
 </table>
 
-<!--<h1>Taylor's Workout Tracker</h1>
 
-<a href="http://localhost:8080/">Home Page</a>
-</br>
-<a href="http://localhost:8080/insert?c=Demo+Task">Insert demo</a>
-</br>
-<a href="http://localhost:8080/reset-table/">Reset Table</a>
+<!--<td>
+    <form method="post"> Hint! One goes to the .js file, the other to the Ajax request!
+        <input type="hidden" name="id" value="{{this.id}}">
+        <input type="button" value="Delete" onclick="deleteRow('dataTable', this)" />
+    </form>
+</td>-->
 
-<h1>MySQL Results:</h1>
-<p>{{results}}</p>
-
-<table id="dataTable">
-    <tr>
-        <th>Name</th>
-        <th>Reps</th>
-        <th>Weight</th>
-        <th>Date</th>
-        <th>lbs?</th>
-    </tr>
-    {{#each rows}}
-    <tr>
-        <td>{{name}}</td>
-        <td>{{reps}}</td>
-        <td>{{weight}}</td>
-        <td>{{moment date format="MM-DD-YYYY"}}</td>
-        <td>{{lbs}}</td>
-        <td>
-            <form method="post"> Hint! One goes to the .js file, the other to the Ajax request!
-                <input type="hidden" name="id" value="{{this.id}}">
-                <input type="button" value="Delete" onclick="deleteRow('dataTable', this)" />
-            </form>
-	</td>
-    </tr>
-    {{/each}}
-</table>-->
 
 <!--/*Hidden fields will be key to deleting and updating data. 
 Every row should have a form (or two froms) holding the update 
 and delete buttons. That form should also have an input of 
 type="hidden" which holds the id of the row so you can easily 
-pass that information to the server to delete or update the row.->
-
-{{{script}}}
+pass that information to the server to delete or update the row.-->
