@@ -24,15 +24,6 @@
 
 //document.addEventListener('click', runTest);
 
-//function runTest() {
-//    var req = new XMLHTTPRequest();
-//    req.open("GET", "main.handlebars", true);
-//    req.addEventListener("load", function() {
-//        console.log("Done:", req.status);
-//    });
-//    req.send(null);
-//}
-
 document.addEventListener('DOMContentLoaded', bindButtons);
 
 function bindButtons(){
@@ -47,7 +38,37 @@ function bindButtons(){
         req.addEventListener('load',function(){
             if(req.status >= 200 && req.status < 400){
                 var response = JSON.parse(req.responseText);
-                document.getElementById('test').textContent=response.content;
+                
+                var table = document.getElementById('myTable');
+                var newId = document.createElement("td");
+                var newName = document.createElement("td");
+                var newReps = document.createElement("td");
+                var newWeight = document.createElement("td");
+                var newDate = document.createElement("td");
+                var newLbs = document.createElement("td");
+                
+                for (var row of response.rows){
+                    newId.textContent = row.id;
+                    newName.textContent = row.name;
+                    newReps.textContent = row.reps;
+                    newWeight.textContent = row.weight;
+                    newDate.textContent = row.date;
+                    newLbs.textContent = row.lbs;
+                    
+                    var newRow = document.createElement("tr");
+                    
+                    //ADD IN: newRow.appendChild(newId);
+                    newRow.appendChild(newName);
+                    newRow.appendChild(newReps);
+                    newRow.appendChild(newWeight);
+                    newRow.appendChild(newDate);
+                    newRow.appendChild(newLbs);
+                    
+                    table.appendChild(newRow);
+                }
+                
+                console.log(response.rows);
+                document.getElementById('test').textContent=response.rows;
             }
             else {
                 console.log("Error in network request: " + req.statusText);

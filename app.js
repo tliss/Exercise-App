@@ -27,24 +27,21 @@ app.get('/',function(req,res,next){
     res.render('home', context);
 });
 
-var num = 0;
-
 app.get('/notify',function(reg,res,next){
-    
+    var payload = {};
     console.log('I got a GET request! ');
     
-    num++;
+   
     
-    var payload = {content:'Success! ' + num};
-    res.send(JSON.stringify(payload));
+    mysql.pool.query("SELECT * FROM exercises", function(err, rows, fields){
+        if (err){
+            next(err);
+            return;
+        }
+        payload.rows = rows;
     
-//    mysql.pool.query("SELECT * FROM workouts", function(err, rows, fields){
-//        if (err){
-//            next(err);
-//            return;
-//        }
-//        context.rows = rows;
-//    });
+        res.send(JSON.stringify(payload));
+    });
 });
 
 app.get('/reset-table',function(req,res,next){
