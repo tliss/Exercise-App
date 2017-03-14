@@ -24,13 +24,27 @@ app.set('port', 8080);
 app.get('/',function(req,res,next){
     var context = {};
 
-    console.log('hello from inside GET');
-
     res.render('home', context);
 });
 
-app.get('/insert',function(reg,res,next){
+var num = 0;
+
+app.get('/notify',function(reg,res,next){
     
+    console.log('I got a GET request! ');
+    
+    num++;
+    
+    var payload = {content:'Success! ' + num};
+    res.send(JSON.stringify(payload));
+    
+//    mysql.pool.query("SELECT * FROM workouts", function(err, rows, fields){
+//        if (err){
+//            next(err);
+//            return;
+//        }
+//        context.rows = rows;
+//    });
 });
 
 app.get('/reset-table',function(req,res,next){
