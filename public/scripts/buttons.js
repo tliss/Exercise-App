@@ -43,14 +43,18 @@ function bindButtons(){
             payload.lbs = parseInt(document.getElementById('lbsNo').value);
         }
         
-        req.open("POST", "http://localhost:8080/notify", true);
+        req.open("POST", "http://localhost:3000/notify", true);
         
         //when we get a response from our GET request...
         req.addEventListener('load',function(){
             if(req.status >= 200 && req.status < 400){
+                
                 var response = JSON.parse(req.responseText);
                 
-                var table = document.getElementById('myTable');
+                //var table = document.getElementById('myTable');
+                var oldTableBody = document.getElementById('myTableBody');
+                
+                var newTableBody = document.createElement('tbody');
                 
                 for (var row of response.rows){
                     var newId = document.createElement("td");
@@ -76,8 +80,10 @@ function bindButtons(){
                     newRow.appendChild(newDate);
                     newRow.appendChild(newLbs);
                     
-                    table.appendChild(newRow);
+                    newTableBody.appendChild(newRow);
                 }
+                oldTableBody.parentNode.replaceChild(newTableBody, oldTableBody);
+                newTableBody.id='myTableBody';
             }
             else {
                 console.log("Error in network request: " + req.statusText);

@@ -23,7 +23,7 @@ var moment = require('moment');
 //*****MySQL stuff******
 var mysql = require('./mysql.js');
 
-app.set('port', 8080);
+app.set('port', 3000);
 
 //*****Routes*************
 
@@ -37,31 +37,39 @@ app.post('/notify',function(req,res,next){
     var context = {};
     
     var data = req.body;
-    var reject = false;
-    
-    for (var item in data){
-        if (item === null){
-            reject = true;
-        }
-    }
-    
-    if (reject !== true) {
-        mysql.pool.query("INSERT INTO exercises(name, reps, weight, date, lbs) VALUES ?", [[data.name, data.reps, data.weight, data.date, data.lbs]]);
-    }
-    
-    mysql.pool.query("SELECT * FROM exercises", function(err, rows, fields){
+//    var reject = false;
+//    
+//    for (var item in data){
+//        if (item === null){
+//            reject = true;
+//        }
+//    }
+//    
+//    if (reject === false) {
+//        console.log("Invalid Entry");
+//        //Fill this in later
+//    } else {
+    mysql.pool.query("INSERT INTO exercises SET ?", data, function(err, rows, fields){
         if (err){
             next(err);
             return;
         }
-        context.rows = rows;
-        
-        for (var row of context.rows){
-            row.date = moment(row.date).format('MM/DD/YYYY');
-        }
-    
-        res.send(JSON.stringify(context));
+        mysql.pool.query("SELECT * FROM exercises", function(err, rows, fields){
+            if (err){
+                next(err);
+                return;
+            }
+
+            context.rows = rows;
+
+            for (var row of context.rows){
+                row.date = moment(row.date).format('MM/DD/YYYY');
+            }
+
+            res.send(JSON.stringify(context));
+        });
     });
+//    }
 });
 
 app.get('/reset-table',function(req,res,next){
