@@ -31,10 +31,19 @@ function bindButtons(){
     document.getElementById('Submit').addEventListener('click', function(event){
             
         var req = new XMLHttpRequest();
+        
         var payload = {};
         payload.name = document.getElementById('name').value;
+        payload.reps = parseInt(document.getElementById('reps').value);
+        payload.weight = parseInt(document.getElementById('weight').value);
+        payload.date = document.getElementById('date').value;
+        if (document.getElementById('lbsYes').checked){
+            payload.lbs = parseInt(document.getElementById('lbsYes').value);
+        } else {
+            payload.lbs = parseInt(document.getElementById('lbsNo').value);
+        }
         
-        req.open("GET", "http://localhost:8080/notify", true);
+        req.open("POST", "http://localhost:8080/notify", true);
         
         //when we get a response from our GET request...
         req.addEventListener('load',function(){
@@ -75,7 +84,9 @@ function bindButtons(){
             }
         });
         
-        req.send(null);
+        req.setRequestHeader('Content-Type', 'application/json');
+
+        req.send(JSON.stringify(payload));
         
         event.preventDefault();
     });        

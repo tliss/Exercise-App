@@ -3,6 +3,11 @@ var express = require('express');
 var app = express();
 app.use(express.static('public'));
 
+//*****BodyParser stuff*******
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 //*****Handlebars stuff******
 //Create instance of handlebars let it know default layout is 'main'
 //Default layout is the area all the other contents will be inserted
@@ -15,13 +20,12 @@ app.set('view engine', 'handlebars');
 var helpers = require('handlebars-helpers')();
 var moment = require('moment');
 
-
 //*****MySQL stuff******
 var mysql = require('./mysql.js');
 
 app.set('port', 8080);
 
-//*****GET Routes*************
+//*****Routes*************
 
 app.get('/',function(req,res,next){
     var context = {};
@@ -29,21 +33,34 @@ app.get('/',function(req,res,next){
     res.render('home', context);
 });
 
-app.get('/notify',function(reg,res,next){
-    var payload = {};
+app.post('/notify',function(req,res,next){
+    var context = {};
+    
+    var data = req.body;
+    var reject = false;
+    
+    for (var item in data){
+        if (item === null){
+            reject = true;
+        }
+    }
+    
+    if (reject !== true) {
+        mysql.pool.query("INSERT INTO exercises(name, reps, weight, date, lbs) VALUES ?", [[data.name, data.reps, data.weight, data.date, data.lbs]]);
+    }
     
     mysql.pool.query("SELECT * FROM exercises", function(err, rows, fields){
         if (err){
             next(err);
             return;
         }
-        payload.rows = rows;
+        context.rows = rows;
         
-        for (var row of payload.rows){
+        for (var row of context.rows){
             row.date = moment(row.date).format('MM/DD/YYYY');
         }
     
-        res.send(JSON.stringify(payload));
+        res.send(JSON.stringify(context));
     });
 });
 
@@ -62,12 +79,6 @@ app.get('/reset-table',function(req,res,next){
       res.render('home',context);
     });
   });
-});
-
-//*****POST Requests*********
-app.post('/',function(req,res){
-
-
 });
 
 //*****Error Handling********
