@@ -29,13 +29,30 @@ app.set('port', 3000);
 
 app.get('/',function(req,res,next){
     var context = {};
-
+    
     res.render('home', context);
+});
+
+app.post('/getTable',function(req,res,next){
+    var context = {};
+    mysql.pool.query("SELECT * FROM exercises", function(err, rows, fields){
+        if (err){
+            next(err);
+            return;
+        }
+
+        context.rows = rows;
+
+        for (var row of context.rows){
+            row.date = moment(row.date).format('MM/DD/YYYY');
+        }
+
+        res.send(JSON.stringify(context));
+    });
 });
 
 app.post('/notify',function(req,res,next){
     var context = {};
-    
     var data = req.body;
 //    var reject = false;
 //    
