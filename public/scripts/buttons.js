@@ -17,7 +17,7 @@ function bindButtons(){
             payload.lbs = parseInt(document.getElementById('lbsNo').value);
         }
         
-        req.open("POST", "http://localhost:8080/notify", true);
+        req.open("POST", "http://localhost:3000/notify", true);
         
         //when we get a response from our GET request...
         req.addEventListener('load',function(){
@@ -48,7 +48,7 @@ function displayTable(){
         
     var req = new XMLHttpRequest();
     
-    req.open("POST", "http://localhost:8080/getTable", true);
+    req.open("POST", "http://localhost:3000/getTable", true);
         
     //when we get a response from our GET request...
     req.addEventListener('load',function(){
@@ -83,8 +83,12 @@ function createTable(response) {
         var newWeight = document.createElement("td");
         var newDate = document.createElement("td");
         var newLbs = document.createElement("td");
+        var newDeleteTd = document.createElement("td");
         var newDelete = document.createElement("input");
-        var newForm = document.createElement("form");
+        var newFormDelete = document.createElement("form");
+        var newEditTd = document.createElement("td");
+        var newEdit = document.createElement("input");
+        var newFormEdit = document.createElement("form");
 
         newId.textContent = row.id;
         newName.textContent = row.name;
@@ -97,6 +101,12 @@ function createTable(response) {
         newDelete.addEventListener('click', function(){
             deleteRow("myTable", this);
         });
+        newEdit.type="button";
+        newEdit.value="Edit";
+        newEdit.addEventListener('click', function(){
+            editRow("myTable", this);
+        });
+        
 
         var newRow = document.createElement("tr");
 
@@ -106,8 +116,12 @@ function createTable(response) {
         newRow.appendChild(newWeight);
         newRow.appendChild(newDate);
         newRow.appendChild(newLbs);
-        newRow.appendChild(newForm);
-        newForm.appendChild(newDelete);
+        newRow.appendChild(newDeleteTd);
+        newDeleteTd.appendChild(newFormDelete);
+        newFormDelete.appendChild(newDelete);
+        newRow.appendChild(newEditTd);
+        newEditTd.appendChild(newFormEdit);
+        newFormEdit.appendChild(newEdit);
 
         newTableBody.appendChild(newRow);
     }
@@ -118,11 +132,8 @@ function createTable(response) {
 function deleteRow(tableID, currentRow) {
     
     var req = new XMLHttpRequest();
-        
     var payload = {};
-    
-    var rowId = currentRow.parentNode.parentNode.firstChild.textContent;
-    
+    var rowId = currentRow.parentNode.parentNode.parentNode.firstChild.textContent;
     payload.rowId = rowId;
 
     //********Removing row from table********
@@ -132,7 +143,7 @@ function deleteRow(tableID, currentRow) {
         for (var i = 0; i < rowCount; i++) {
             var row = table.rows[i];
             
-            if (row===currentRow.parentNode.parentNode) {
+            if (row===currentRow.parentNode.parentNode.parentNode) {
                 if (rowCount <= 1) {
                     alert("Cannot delete all the rows.");
                     break;
@@ -149,7 +160,7 @@ function deleteRow(tableID, currentRow) {
     //*********Removing row from database********
     var req = new XMLHttpRequest();
     
-    req.open("POST", "http://localhost:8080/remove", true);
+    req.open("POST", "http://localhost:3000/remove", true);
         
     //when we get a response from our GET request...
     req.addEventListener('load',function(){
@@ -168,4 +179,62 @@ function deleteRow(tableID, currentRow) {
     req.send(JSON.stringify(payload));
 
     event.preventDefault();
+}
+
+function editRow(tableID, element) {
+    
+//    var req = new XMLHttpRequest();
+//    var payload = {};
+
+    var currentRow = element.parentNode.parentNode.parentNode;
+    
+    var id = currentRow.getElementsByTagName('td')[0].textContent;
+    var name = currentRow.getElementsByTagName('td')[1].textContent;
+    var reps = currentRow.getElementsByTagName('td')[2].textContent;
+    var weight = currentRow.getElementsByTagName('td')[3].textContent;
+    var date = currentRow.getElementsByTagName('td')[4].textContent;
+    var lbs = currentRow.getElementsByTagName('td')[5].textContent;
+    
+    var newName = document.createElement("input");
+    newName.type = "text";
+    newName.name = "name";
+    newName.value = name;
+    var newReps = document.createElement("input");
+    newReps.type = "number";
+    newReps.name = "reps";
+    newReps.value = reps;
+    var newWeight = document.createElement("input");
+    newWeight.type = "number";
+    newWeight.name = "weight";
+    newWeight.value = weight;
+    var newDate = document.createElement("input");
+    newDate.type = "date";
+    newDate.name = "date";
+    newDate.value = date;
+    var newLbsYes = document.createElement("input");
+    newLbsYes.type = "radio";
+    newLbsYes.name = "lbs";
+    newLbsYes.id = "lbsEditYes";
+    newLbsYes.value = 1;
+    var newLbsNo = document.createElement("input");
+    newLbsNo.type = "radio";
+    newLbsNo.name = "lbs";
+    newLbsNo.id = "lbsEditNo";
+    newLbsNo.value = 0;
+    
+    colNumber = currentRow.parentNode.parentNode.rows[0].cells.length;
+
+    for (var i = 1; i < colNumber; i++) {
+        var workingTd = currentRow.getElementsByTagName('td')[i];
+        var newForm = document.createElement("form");
+        workingTd.textContent="";
+        workingTd.appendChild(newForm);
+        newForm.appendChild(newName);
+        
+        //Switch statement here!!!
+        
+    }
+
+//    payload.rowId = rowId;
+    
 }

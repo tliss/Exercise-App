@@ -23,7 +23,7 @@ var moment = require('moment');
 //*****MySQL stuff******
 var mysql = require('./mysql.js');
 
-app.set('port', 8080);
+app.set('port', 3000);
 
 //*****Routes*************
 
