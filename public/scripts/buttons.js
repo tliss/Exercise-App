@@ -116,7 +116,16 @@ function createTable(response) {
 }
 
 function deleteRow(tableID, currentRow) {
+    
+    var req = new XMLHttpRequest();
+        
+    var payload = {};
+    
+    var rowId = currentRow.parentNode.parentNode.firstChild.textContent;
+    
+    payload.rowId = rowId;
 
+    //********Removing row from table********
     try {
         var table = document.getElementById(tableID);
         var rowCount = table.rows.length;
@@ -136,4 +145,27 @@ function deleteRow(tableID, currentRow) {
     } catch (e) {
         //alert(e);
     }
+    
+    //*********Removing row from database********
+    var req = new XMLHttpRequest();
+    
+    req.open("POST", "http://localhost:8080/remove", true);
+        
+    //when we get a response from our GET request...
+    req.addEventListener('load',function(){
+        if(req.status >= 200 && req.status < 400){
+
+        displayTable();
+
+        }
+        else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+
+    req.setRequestHeader('Content-Type', 'application/json');
+
+    req.send(JSON.stringify(payload));
+
+    event.preventDefault();
 }

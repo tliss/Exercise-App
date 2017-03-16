@@ -51,6 +51,17 @@ app.post('/getTable',function(req,res,next){
     });
 });
 
+app.post('/remove', function(req,res,next){
+    
+    mysql.pool.query("DELETE FROM exercises WHERE id=" + req.body.rowId, function(err, rows, fields){
+        if (err){
+            next(err);
+            return;
+        }
+        res.send(null);
+    });
+});
+
 app.post('/notify',function(req,res,next){
     var context = {};
     var data = req.body;
