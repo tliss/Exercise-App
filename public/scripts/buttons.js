@@ -1,29 +1,3 @@
-//document.addEventListener("click", deleteRow);
-//
-//function deleteRow(tableID,currentRow) {
-//    try {
-//        var table = document.getElementById(tableID);
-//        var rowCount = table.rows.length;
-//        for (var i = 0; i < rowCount; i++) {
-//            var row = table.rows[i];
-//            
-//            if (row===currentRow.parentNode.parentNode) {
-//                if (rowCount <= 1) {
-//                    alert("Cannot delete all the rows.");
-//                    break;
-//                }
-//                table.deleteRow(i);
-//                rowCount--;
-//                i--;
-//            }
-//        }
-//    } catch (e) {
-//        //alert(e);
-//    }
-//}
-
-//document.addEventListener('click', runTest);
-
 document.addEventListener('DOMContentLoaded', bindButtons);
 
 function bindButtons(){
@@ -109,6 +83,8 @@ function createTable(response) {
         var newWeight = document.createElement("td");
         var newDate = document.createElement("td");
         var newLbs = document.createElement("td");
+        var newDelete = document.createElement("input");
+        var newForm = document.createElement("form");
 
         newId.textContent = row.id;
         newName.textContent = row.name;
@@ -116,6 +92,11 @@ function createTable(response) {
         newWeight.textContent = row.weight;
         newDate.textContent = row.date;
         newLbs.textContent = row.lbs;
+        newDelete.type="button";
+        newDelete.value="Delete";
+        newDelete.addEventListener('click', function(){
+            deleteRow("myTable", this);
+        });
 
         var newRow = document.createElement("tr");
 
@@ -125,9 +106,34 @@ function createTable(response) {
         newRow.appendChild(newWeight);
         newRow.appendChild(newDate);
         newRow.appendChild(newLbs);
+        newRow.appendChild(newForm);
+        newForm.appendChild(newDelete);
 
         newTableBody.appendChild(newRow);
     }
     oldTableBody.parentNode.replaceChild(newTableBody, oldTableBody);
     newTableBody.id='myTableBody';
+}
+
+function deleteRow(tableID, currentRow) {
+
+    try {
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        for (var i = 0; i < rowCount; i++) {
+            var row = table.rows[i];
+            
+            if (row===currentRow.parentNode.parentNode) {
+                if (rowCount <= 1) {
+                    alert("Cannot delete all the rows.");
+                    break;
+                }
+                table.deleteRow(i);
+                rowCount--;
+                i--;
+            }
+        }
+    } catch (e) {
+        //alert(e);
+    }
 }
