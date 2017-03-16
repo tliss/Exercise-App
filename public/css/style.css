@@ -10,6 +10,7 @@ label {
     width: 47px;
     display: inline-block;
     padding-bottom: 5px;
+    padding-right: 5px;
     text-align: right;
 }
 
@@ -23,4 +24,41 @@ fieldset {
 
 #Submit {
     margin-top: 3px;
+}
+
+#idHead {
+    width: 30px;
+}
+
+#nameHead {
+    width: 150px;
+}
+
+#repsHead {
+    width: 40px;
+}
+
+#weightHead {
+    width: 55px;
+}
+
+#dateHead {
+    width: 100px;
+}
+
+#lbsHead {
+    width: 30px;
+}
+
+td {
+    text-align: center;
+}
+
+#myTable, #myField {
+    margin: auto;
+}
+
+#date {
+    width: 168px;
+    height: 17px;
 }

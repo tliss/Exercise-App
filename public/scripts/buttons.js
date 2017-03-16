@@ -43,7 +43,7 @@ function bindButtons(){
             payload.lbs = parseInt(document.getElementById('lbsNo').value);
         }
         
-        req.open("POST", "http://localhost:3000/notify", true);
+        req.open("POST", "http://localhost:8080/notify", true);
         
         //when we get a response from our GET request...
         req.addEventListener('load',function(){
@@ -94,6 +94,9 @@ function bindButtons(){
 
         req.send(JSON.stringify(payload));
         
+        var form = document.getElementById('myField');
+        form.reset();
+        
         event.preventDefault();
     });        
 }
@@ -102,7 +105,7 @@ function displayTable(){
         
     var req = new XMLHttpRequest();
     
-    req.open("POST", "http://localhost:3000/getTable", true);
+    req.open("POST", "http://localhost:8080/getTable", true);
         
     //when we get a response from our GET request...
     req.addEventListener('load',function(){
