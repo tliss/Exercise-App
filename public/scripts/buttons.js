@@ -51,39 +51,8 @@ function bindButtons(){
                 
                 var response = JSON.parse(req.responseText);
                 
-                //var table = document.getElementById('myTable');
-                var oldTableBody = document.getElementById('myTableBody');
-                
-                var newTableBody = document.createElement('tbody');
-                
-                for (var row of response.rows){
-                    var newId = document.createElement("td");
-                    var newName = document.createElement("td");
-                    var newReps = document.createElement("td");
-                    var newWeight = document.createElement("td");
-                    var newDate = document.createElement("td");
-                    var newLbs = document.createElement("td");
-                    
-                    newId.textContent = row.id;
-                    newName.textContent = row.name;
-                    newReps.textContent = row.reps;
-                    newWeight.textContent = row.weight;
-                    newDate.textContent = row.date;
-                    newLbs.textContent = row.lbs;
-                    
-                    var newRow = document.createElement("tr");
-                    
-                    newRow.appendChild(newId);
-                    newRow.appendChild(newName);
-                    newRow.appendChild(newReps);
-                    newRow.appendChild(newWeight);
-                    newRow.appendChild(newDate);
-                    newRow.appendChild(newLbs);
-                    
-                    newTableBody.appendChild(newRow);
-                }
-                oldTableBody.parentNode.replaceChild(newTableBody, oldTableBody);
-                newTableBody.id='myTableBody';
+                createTable(response);
+
             }
             else {
                 console.log("Error in network request: " + req.statusText);
@@ -113,39 +82,8 @@ function displayTable(){
 
             var response = JSON.parse(req.responseText);
 
-            //var table = document.getElementById('myTable');
-            var oldTableBody = document.getElementById('myTableBody');
+            createTable(response);
 
-            var newTableBody = document.createElement('tbody');
-
-            for (var row of response.rows){
-                var newId = document.createElement("td");
-                var newName = document.createElement("td");
-                var newReps = document.createElement("td");
-                var newWeight = document.createElement("td");
-                var newDate = document.createElement("td");
-                var newLbs = document.createElement("td");
-
-                newId.textContent = row.id;
-                newName.textContent = row.name;
-                newReps.textContent = row.reps;
-                newWeight.textContent = row.weight;
-                newDate.textContent = row.date;
-                newLbs.textContent = row.lbs;
-
-                var newRow = document.createElement("tr");
-
-                newRow.appendChild(newId);
-                newRow.appendChild(newName);
-                newRow.appendChild(newReps);
-                newRow.appendChild(newWeight);
-                newRow.appendChild(newDate);
-                newRow.appendChild(newLbs);
-
-                newTableBody.appendChild(newRow);
-            }
-            oldTableBody.parentNode.replaceChild(newTableBody, oldTableBody);
-            newTableBody.id='myTableBody';
         }
         else {
             console.log("Error in network request: " + req.statusText);
@@ -157,4 +95,39 @@ function displayTable(){
     req.send(null);
 
     event.preventDefault();
-}   
+}
+
+function createTable(response) {
+    var oldTableBody = document.getElementById('myTableBody');
+
+    var newTableBody = document.createElement('tbody');
+
+    for (var row of response.rows){
+        var newId = document.createElement("td");
+        var newName = document.createElement("td");
+        var newReps = document.createElement("td");
+        var newWeight = document.createElement("td");
+        var newDate = document.createElement("td");
+        var newLbs = document.createElement("td");
+
+        newId.textContent = row.id;
+        newName.textContent = row.name;
+        newReps.textContent = row.reps;
+        newWeight.textContent = row.weight;
+        newDate.textContent = row.date;
+        newLbs.textContent = row.lbs;
+
+        var newRow = document.createElement("tr");
+
+        newRow.appendChild(newId);
+        newRow.appendChild(newName);
+        newRow.appendChild(newReps);
+        newRow.appendChild(newWeight);
+        newRow.appendChild(newDate);
+        newRow.appendChild(newLbs);
+
+        newTableBody.appendChild(newRow);
+    }
+    oldTableBody.parentNode.replaceChild(newTableBody, oldTableBody);
+    newTableBody.id='myTableBody';
+}
