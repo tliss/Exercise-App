@@ -14,9 +14,41 @@ th:first-child, td:first-child{
     display: none;
 }
 
+body {
+    background-color: #A6BBD7;
+}
+
+th:not(:nth-child(7)):not(:nth-child(8)){
+    background-color: #315280;
+    color: white;
+    font-family: arial;
+}
+
+tr:nth-child(even) td:not(:nth-child(7)):not(:nth-child(8)) {
+    background-color: #D6E1EF;
+}
+
+tr:nth-child(odd) td:not(:nth-child(7)):not(:nth-child(8)) {
+    background-color: #A6BBD7;
+}
 
 #myTableBody td:not(:nth-child(7)):not(:nth-child(8)) {
     border: 1px solid black;
+}
+
+td:not(:nth-child(6)):not(:nth-child(7)):not(:nth-child(8))>form>input{
+    width: 150px;
+    height: 18px;
+}
+
+td:nth-child(7)>form>input, td:nth-child(8)>form>input {
+    width: 51px;
+    height: 30px;
+}
+
+td:nth-child(7), td:nth-child(8) {
+    padding-left: 7px;
+    padding-right: 0px;
 }
 
 label {
