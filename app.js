@@ -62,6 +62,15 @@ app.post('/remove', function(req,res,next){
     });
 });
 
+app.get('/update', function(req,res,next){
+    console.log("Request arrived!");
+    
+    var context = {};
+    
+//    res.send(null);
+    res.render('update', context);
+});
+
 app.post('/notify',function(req,res,next){
     var context = {};
     var data = req.body;
