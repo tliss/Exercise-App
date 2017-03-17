@@ -95,7 +95,11 @@ function createTable(response) {
         newReps.textContent = row.reps;
         newWeight.textContent = row.weight;
         newDate.textContent = row.date;
-        newLbs.textContent = row.lbs;
+        if (row.lbs === 0){
+            newLbs.textContent = "No";
+        } else {
+            newLbs.textContent = "Yes";
+        }
         newDelete.type="button";
         newDelete.value="Delete";
         newDelete.addEventListener('click', function(){
