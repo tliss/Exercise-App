@@ -2,7 +2,20 @@ table {
     border-collapse: collapse;
 }
 
-table, th, td {
+#myTable th {
+    border: 1px solid black;
+}
+
+td {
+    height: 50px;
+}
+
+th:first-child, td:first-child{
+    display: none;
+}
+
+
+#myTableBody td:not(:nth-child(7)):not(:nth-child(8)) {
     border: 1px solid black;
 }
 
@@ -31,23 +44,23 @@ fieldset {
 }
 
 #nameHead {
-    width: 150px;
+    width: 175px;
 }
 
 #repsHead {
-    width: 40px;
+    width: 175px;
 }
 
 #weightHead {
-    width: 55px;
+    width: 175px;
 }
 
 #dateHead {
-    width: 100px;
+    width: 175px;
 }
 
 #lbsHead {
-    width: 30px;
+    width: 100px;
 }
 
 td {
@@ -61,4 +74,8 @@ td {
 #date {
     width: 168px;
     height: 17px;
+}
+
+form>p {
+    display: inline-block;
 }

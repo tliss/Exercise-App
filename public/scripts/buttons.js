@@ -17,7 +17,7 @@ function bindButtons(){
             payload.lbs = parseInt(document.getElementById('lbsNo').value);
         }
         
-        req.open("POST", "http://localhost:3000/notify", true);
+        req.open("POST", "http://localhost:8080/notify", true);
         
         //when we get a response from our GET request...
         req.addEventListener('load',function(){
@@ -48,7 +48,7 @@ function displayTable(){
         
     var req = new XMLHttpRequest();
     
-    req.open("POST", "http://localhost:3000/getTable", true);
+    req.open("POST", "http://localhost:8080/getTable", true);
         
     //when we get a response from our GET request...
     req.addEventListener('load',function(){
@@ -160,7 +160,7 @@ function deleteRow(tableID, currentRow) {
     //*********Removing row from database********
     var req = new XMLHttpRequest();
     
-    req.open("POST", "http://localhost:3000/remove", true);
+    req.open("POST", "http://localhost:8080/remove", true);
         
     //when we get a response from our GET request...
     req.addEventListener('load',function(){
@@ -229,10 +229,32 @@ function editRow(tableID, element) {
         var newForm = document.createElement("form");
         workingTd.textContent="";
         workingTd.appendChild(newForm);
-        newForm.appendChild(newName);
+
         
-        //Switch statement here!!!
-        
+        switch (i) {
+            case 1:
+                newForm.appendChild(newName);
+                break;
+            case 2:
+                newForm.appendChild(newReps);
+                break;
+            case 3:
+                newForm.appendChild(newWeight);
+                break;
+            case 4:
+                newForm.appendChild(newDate);
+                break;
+            case 5:
+                var yesTag = document.createElement("p");
+                yesTag.textContent="Yes";
+                var noTag = document.createElement("p");
+                noTag.textContent="No";
+                newForm.appendChild(yesTag);
+                newForm.appendChild(newLbsYes);
+                newForm.appendChild(noTag);
+                newForm.appendChild(newLbsNo);
+                
+        }
     }
 
 //    payload.rowId = rowId;
