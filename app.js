@@ -23,12 +23,15 @@ var moment = require('moment');
 //*****MySQL stuff******
 var mysql = require('./mysql.js');
 
-app.set('port', 8080);
+app.set('port', 3000);
 
 //*****Routes*************
 
 app.get('/',function(req,res,next){
     var context = {};
+
+    var subScript = "<script id=\"onStart\">window.addEventListener('load', function(){displayTable();});</script>";
+    context.test = subScript;
     
     res.render('home', context);
 });
@@ -62,13 +65,12 @@ app.post('/remove', function(req,res,next){
     });
 });
 
-app.get('/update', function(req,res,next){
-    console.log("Request arrived!");
-    
-    var context = {};
-    
-//    res.send(null);
-    res.render('update', context);
+app.get('/update', function(req,res){
+//    var context = {};
+//    context.tableID = req.ID;
+//    context.element = req.element;
+
+    res.render('update');
 });
 
 app.post('/notify',function(req,res,next){
