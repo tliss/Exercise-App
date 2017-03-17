@@ -51,7 +51,7 @@ td:not(:nth-child(6)):not(:nth-child(7)):not(:nth-child(8))>form>input{
 }
 
 td:nth-child(7)>form>input, td:nth-child(8)>form>input {
-    width: 51px;
+    width: 60px;
     height: 30px;
 }
 
