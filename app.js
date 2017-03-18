@@ -68,9 +68,18 @@ app.post('/edit',function(req,res,next){
     
     var data = JSON.parse(req.body.package);
     
+    console.log(data.lbs);
+    
     var date = data.date;
     date = moment(date).format('YYYY-MM-DD');
     data.date = date;
+    
+    var lbs = data.lbs;
+    if (lbs === "Yes") {
+        data.lbs = true;
+    } else {
+        data.lbs = false;
+    }
     
     res.render('update', data);
 });

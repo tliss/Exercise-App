@@ -2,6 +2,27 @@ table {
     border-collapse: collapse;
 }
 
+#back {
+    float:left;
+    margin-right: 24%
+}
+
+#submitEdit {
+
+    margin-right: 5px;
+    padding-right: 3px;
+    float: left;
+    margin-left: 27%
+}
+
+#submitContainer {
+    text-align: center;
+}
+
+#submitEdit, #back {
+    width: 58px;
+}
+
 #myTable th {
     border: 1px solid black;
 }
@@ -72,22 +93,8 @@ fieldset {
     width: 250px;
 }
 
-#submitContainer {
-    text-align: center;
-}
-
 #Submit {
     margin-top: 3px;
-}
-
-#submitEdit, #back {
-    text-align: center;
-    width: 54px;
-}
-
-#submitEdit {
-    margin-right: 8px;
-    padding-left: 4px;
 }
 
 #idHead {
