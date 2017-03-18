@@ -116,7 +116,7 @@ function createTable(response) {
    
         newEditButton.addEventListener('click', function(){
             var data = {};
-            var currentRow = newEditButton.parentNode.parentNode.parentNode;
+            var currentRow = this.parentNode.parentNode.parentNode;
             data.id = currentRow.getElementsByTagName('td')[0].textContent;
             data.name = currentRow.getElementsByTagName('td')[1].textContent;
             data.reps = currentRow.getElementsByTagName('td')[2].textContent;
