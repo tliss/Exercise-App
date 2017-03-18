@@ -6,7 +6,7 @@ app.use(express.static('public'));
 //*****BodyParser stuff*******
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //*****Handlebars stuff******
 //Create instance of handlebars let it know default layout is 'main'
@@ -29,7 +29,6 @@ app.set('port', 3000);
 
 app.get('/',function(req,res,next){
     var context = {};
-
     var subScript = "<script id=\"onStart\">window.addEventListener('load', function(){displayTable();});</script>";
     context.test = subScript;
     
@@ -65,12 +64,22 @@ app.post('/remove', function(req,res,next){
     });
 });
 
-app.get('/update', function(req,res){
-//    var context = {};
-//    context.tableID = req.ID;
-//    context.element = req.element;
+app.post('/edit',function(req,res,next){
+    
+    var data = JSON.parse(req.body.package);
+    
+    var date = data.date;
+    date = moment(date).format('YYYY-MM-DD');
+    data.date = date;
+    
+    res.render('update', data);
+});
 
-    res.render('update');
+app.post('/update', function(req,res){
+    
+    
+    
+    res.send(req.body);
 });
 
 app.post('/notify',function(req,res,next){

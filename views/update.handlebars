@@ -1,1 +1,25 @@
-<h1>hello</h1>
+<h1>Taylor's Workout Tracker</h1>
+<form>
+    <fieldset id="editField">
+        <legend>Edit Entry</legend>
+
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" value="{{name}}">
+        <br>
+        <label for="reps">Reps</label>
+        <input type="number" name="reps" id="reps" value="{{reps}}">
+        <br>
+        <label for="weight">Weight</label>
+        <input type="number" name="weight" id="weight" value="{{weight}}">
+        <br>
+        <label for="date">Date</label>
+        <input type="date" name="date" id="date" value="{{date}}">
+        <br>
+        <label for="lbs">Lbs?</label>
+        <input type="radio" name="lbs" id="lbsYes" value="1">Yes
+        <input type="radio" name="lbs" id="lbsNo" value="0">No
+        <br>
+        <div id="submitContainer"><input type="submit" id="submitEdit">
+        <input type="button" id="back" value="Back"></div>
+    </fieldset>
+</form>

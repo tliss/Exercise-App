@@ -85,11 +85,9 @@ function createTable(response) {
         var newDate = document.createElement("td");
         var newLbs = document.createElement("td");
         var newDeleteTd = document.createElement("td");
+        var newEditTd = document.createElement("td");
         var newDelete = document.createElement("input");
         var newFormDelete = document.createElement("form");
-        var newEditTd = document.createElement("td");
-        var newEdit = document.createElement("input");
-        var newFormEdit = document.createElement("form");
 
         newId.textContent = row.id;
         newName.textContent = row.name;
@@ -101,18 +99,40 @@ function createTable(response) {
         } else {
             newLbs.textContent = "Yes";
         }
-        newDelete.type="button";
+        newDelete.type="submit";
         newDelete.value="Delete";
         newDelete.addEventListener('click', function(){
             deleteRow("myTable", this);
         });
-        newEdit.type="button";
-        newEdit.value="Edit";
-        newEdit.addEventListener('click', function(){
-            editRow("myTable", this);
+        
+        //*******EDIT BUTTON*******
+        var newEditButton = document.createElement("input");
+        newEditButton.type="button";
+        newEditButton.value="Edit";
+        
+        var newEditForm = document.createElement("form");
+        newEditForm.action="/edit";
+        newEditForm.method="post";
+   
+        newEditButton.addEventListener('click', function(){
+            var data = {};
+            var currentRow = newEditButton.parentNode.parentNode.parentNode;
+            data.id = currentRow.getElementsByTagName('td')[0].textContent;
+            data.name = currentRow.getElementsByTagName('td')[1].textContent;
+            data.reps = currentRow.getElementsByTagName('td')[2].textContent;
+            data.weight = currentRow.getElementsByTagName('td')[3].textContent;
+            data.date = currentRow.getElementsByTagName('td')[4].textContent;
+            data.lbs = currentRow.getElementsByTagName('td')[5].textContent;
+            
+            var package = document.createElement("input");
+            package.name = 'package';
+            package.value = JSON.stringify(data);
+            package.type = "hidden";
+           
+            newEditForm.append(package);
+            newEditForm.submit();
         });
         
-
         var newRow = document.createElement("tr");
 
         newRow.appendChild(newId);
@@ -125,8 +145,8 @@ function createTable(response) {
         newDeleteTd.appendChild(newFormDelete);
         newFormDelete.appendChild(newDelete);
         newRow.appendChild(newEditTd);
-        newEditTd.appendChild(newFormEdit);
-        newFormEdit.appendChild(newEdit);
+        newEditTd.appendChild(newEditForm);
+        newEditForm.appendChild(newEditButton);
 
         newTableBody.appendChild(newRow);
     }
@@ -186,19 +206,99 @@ function deleteRow(tableID, currentRow) {
     event.preventDefault();
 }
 
-function editRow(tableID, element) {
+function editRow(element) {
     
-    var req;
-
-    req = new XMLHttpRequest();
-
-    if (!req) {
-        alert('Giving up :( Cannot create an XMLHTTP instance');
-    }
+    var req = new XMLHttpRequest();
+    var payload = {};
     
-    req.open('GET', 'http://localhost:3000/update');
-    req.send();
-};
+    var currentRow = element.parentNode.parentNode.parentNode;
+    
+    payload.id = currentRow.getElementsByTagName('td')[0].textContent;
+    payload.name = currentRow.getElementsByTagName('td')[1].textContent;
+    payload.reps = currentRow.getElementsByTagName('td')[2].textContent;
+    payload.weight = currentRow.getElementsByTagName('td')[3].textContent;
+    payload.date = currentRow.getElementsByTagName('td')[4].textContent;
+    payload.lbs = currentRow.getElementsByTagName('td')[5].textContent;
+    
+    req.open("POST", "http://localhost:3000/update", true);
+
+    //when we get a response from our GET request...
+    req.addEventListener('load',function(){
+        if(req.status >= 200 && req.status < 400){
+
+//        window.location="/edit";
+
+        var response = JSON.parse(req.responseText);
+        document.getElementById('name').value = response.name;
+        document.getElementById('reps').value = response.reps;
+        document.getElementById('weight').value = response.weight;
+        document.getElementById('date').value = response.date;
+        }
+        else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+
+    req.setRequestHeader('Content-Type', 'application/json');
+
+    req.send(JSON.stringify(payload));
+
+    event.preventDefault();
+    
+    
+    
+}
+
+//
+//    var currentRow = element.parentNode.parentNode.parentNode;
+//
+//    var id = currentRow.getElementsByTagName('td')[0].textContent;
+//    var name = currentRow.getElementsByTagName('td')[1].textContent;
+//    var reps = currentRow.getElementsByTagName('td')[2].textContent;
+//    var weight = currentRow.getElementsByTagName('td')[3].textContent;
+//    var date = currentRow.getElementsByTagName('td')[4].textContent;
+//    var lbs = currentRow.getElementsByTagName('td')[5].textContent;
+//    
+//
+//        window.location="/update";
+//
+//
+//
+//        console.log(name);
+//        document.getElementById('name').value = name;
+//        document.getElementById('reps').value = reps;
+//        document.getElementById('weight').value = weight;
+//        document.getElementById('date').value = date;
+//
+//        document.getElementById('back').addEventListener('click', function(){
+//            window.location="/";
+//        });
+//    }
+//    
+//    first(second);
+//    
+//    
+//    
+//}
+
+//    req.open("POST", "http://localhost:3000/remove", true);
+//    
+//    req.addEventListener('load',function(){
+//        if(req.status >= 200 && req.status < 400){
+//
+
+//
+//        }
+//        else {
+//            console.log("Error in network request: " + req.statusText);
+//        }
+//    });
+
+//    req.setRequestHeader('Content-Type', 'application/json');
+//
+//    req.send(JSON.stringify(payload));
+//
+//    event.preventDefault();
     
 //    var req = new XMLHttpRequest();
 //    var payload = {};

@@ -80,6 +80,16 @@ fieldset {
     margin-top: 3px;
 }
 
+#submitEdit, #back {
+    text-align: center;
+    width: 54px;
+}
+
+#submitEdit {
+    margin-right: 8px;
+    padding-left: 4px;
+}
+
 #idHead {
     width: 30px;
 }
@@ -108,7 +118,7 @@ td {
     text-align: center;
 }
 
-#myTable, #myField {
+#myTable, #myField, #editField{
     margin: auto;
 }
 
