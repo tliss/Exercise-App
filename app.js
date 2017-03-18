@@ -24,9 +24,9 @@ var helpers = require('handlebars-helpers')();
 var moment = require('moment');
 
 //*****MySQL stuff******
-var mysql = require('./mysql.js');
+var mysql = require('./dbcon.js');
 
-app.set('port', 3000);
+app.set('port', 3645);
 
 //*****Routes*************
 
@@ -44,7 +44,7 @@ app.get('/',function(req,res,next){
 //the home page.
 app.post('/getTable',function(req,res,next){
     var context = {};
-    mysql.pool.query("SELECT * FROM exercises", function(err, rows, fields){
+    mysql.pool.query("SELECT * FROM workouts", function(err, rows, fields){
         if (err){
             next(err);
             return;
@@ -64,7 +64,7 @@ app.post('/getTable',function(req,res,next){
 //a row using data passed to it by the delete button.
 app.post('/remove', function(req,res,next){
     
-    mysql.pool.query("DELETE FROM exercises WHERE id=" + req.body.rowId, function(err, rows, fields){
+    mysql.pool.query("DELETE FROM workouts WHERE id=" + req.body.rowId, function(err, rows, fields){
         if (err){
             next(err);
             return;
@@ -96,13 +96,9 @@ app.post('/edit',function(req,res,next){
 //takes values passed to it by the submit button, and updates the values
 //in the database accordingly.
 app.post('/update',function(req,res,next){
-    console.log("entering /update");
-    
     var data = req.body;
-    
-    console.log(data);
 
-    var createString ="UPDATE exercises SET" +
+    var createString ="UPDATE workouts SET" +
             " name='" + data.name + 
             "', reps=" + data.reps + 
             ", weight=" + data.weight + 
@@ -125,12 +121,12 @@ app.post('/insert',function(req,res,next){
     var context = {};
     var data = req.body;
 
-    mysql.pool.query("INSERT INTO exercises SET ?", data, function(err, rows, fields){
+    mysql.pool.query("INSERT INTO workouts SET ?", data, function(err, rows, fields){
         if (err){
             next(err);
             return;
         }
-        mysql.pool.query("SELECT * FROM exercises", function(err, rows, fields){
+        mysql.pool.query("SELECT * FROM workouts", function(err, rows, fields){
             if (err){
                 next(err);
                 return;
@@ -150,18 +146,19 @@ app.post('/insert',function(req,res,next){
 
 //This route is for resetting/setting-up the database table.
 app.get('/reset-table',function(req,res,next){
-  var context = {};
-  mysql.pool.query("DROP TABLE IF EXISTS workouts", function(err){ //replace your connection pool with the your variable containing the connection pool
+  mysql.pool.query("DROP TABLE IF EXISTS workouts", function(err){
     var createString = "CREATE TABLE workouts("+
-    "id INT PRIMARY KEY AUTO_INCREMENT,"+
-    "name VARCHAR(255) NOT NULL,"+
-    "reps INT,"+
-    "weight INT,"+
-    "date DATE DEFAULT GETDATE(),"+
-    "lbs BOOLEAN)";
+    "id INT PRIMARY KEY AUTO_INCREMENT, "+
+    "name VARCHAR(255) NOT NULL, "+
+    "reps INT, "+
+    "weight INT, "+
+    "date DATETIME, "+
+    "lbs BOOLEAN);";
     mysql.pool.query(createString, function(err){
-      context.results = "Table reset";
-      res.render('home',context);
+        var context = {};
+        var subScript = "<script id=\"onStart\">window.addEventListener('load', function(){window.location.href = './';});</script>";
+        context.test = subScript;
+        res.render('home',context);
     });
   });
 });

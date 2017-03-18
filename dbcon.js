@@ -1,10 +1,9 @@
 var mysql = require('mysql');
 var pool = mysql.createPool({
   connectionLimit : 10,
-  host            : 'localhost',
-  port            : '3306',
-  user            : 'samort7',
-  password        : 'taylor',
+  host            : 'mysql.eecs.oregonstate.edu',
+  user            : 'cs290_lisst',
+  password        : '9GiantRobots',
   database        : 'cs290_lisst'
 });
 

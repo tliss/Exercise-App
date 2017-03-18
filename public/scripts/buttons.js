@@ -27,7 +27,7 @@ function bindButtons(){
                     (document.getElementById('lbsYes').checked===false && document.getElementById('lbsNo').checked===false)) {
                 alert("Fields cannot be left empty!");
             } else {
-                req.open("POST", "http://localhost:3000/insert", true);
+                req.open("POST", "/insert", true);
 
                 //when we get a response from our GET request...
                 req.addEventListener('load',function(){
@@ -77,7 +77,7 @@ function bindButtons(){
                 alert("Fields cannot be left empty!");
                 
             } else {
-                req.open("POST", "http://localhost:3000/update", true);
+                req.open("POST", "/update", true);
 
                 //when we get a response from our GET request...
                 req.addEventListener('load',function(){
@@ -109,7 +109,7 @@ function displayTable(){
         
     var req = new XMLHttpRequest();
     
-    req.open("POST", "http://localhost:3000/getTable", true);
+    req.open("POST", "/getTable", true);
         
     //when we get a response from our GET request...
     req.addEventListener('load',function(){
@@ -254,7 +254,7 @@ function deleteRow(tableID, currentRow) {
     //*********Removing row from database********
     var req = new XMLHttpRequest();
     
-    req.open("POST", "http://localhost:3000/remove", true);
+    req.open("POST", "/remove", true);
 
     //when we get a response from our GET request...
     req.addEventListener('load',function(){
