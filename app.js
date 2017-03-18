@@ -75,13 +75,6 @@ app.post('/edit',function(req,res,next){
     res.render('update', data);
 });
 
-app.post('/update', function(req,res){
-    
-    
-    
-    res.send(req.body);
-});
-
 app.post('/notify',function(req,res,next){
     var context = {};
     var data = req.body;
