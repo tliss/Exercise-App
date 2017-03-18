@@ -18,7 +18,7 @@ function bindButtons(){
                 payload.lbs = parseInt(document.getElementById('lbsNo').value);
             }
 
-            if (payload.name === "" || payload.reps === "" || document.getElementById('weight').value.length === 0 || document.getElementById('date').value.length === 0 || 
+            if (payload.name === "" || document.getElementById('reps').value.length === 0 || document.getElementById('weight').value.length === 0 || document.getElementById('date').value.length === 0 || 
                     (document.getElementById('lbsYes').checked===false && document.getElementById('lbsNo').checked===false)) {
                 alert("Fields cannot be left empty!");
             } else {
@@ -66,7 +66,7 @@ function bindButtons(){
                 payload.lbs = parseInt(document.getElementById('lbsNo').value);
             }
 
-            if (payload.name === "" || payload.reps === "" || document.getElementById('weight').value.length === 0 || document.getElementById('date').value.length === 0 || 
+            if (payload.name === "" || document.getElementById('reps').value.length === 0 || document.getElementById('weight').value.length === 0 || document.getElementById('date').value.length === 0 || 
                     (document.getElementById('lbsYes').checked===false && document.getElementById('lbsNo').checked===false)) {
                 alert("Fields cannot be left empty!");
                 window.location = "/";

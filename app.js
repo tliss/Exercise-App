@@ -98,8 +98,6 @@ app.post('/update',function(req,res,next){
             ", date='" + data.date + 
             "', lbs=" + data.lbs + 
             " WHERE id=" + data.id;
-    
-    console.log(createString);
 
     mysql.pool.query(createString, function(err, rows, fields){
         if (err){
