@@ -1,3 +1,6 @@
+//Taylor Liss - Oregon State University - Prof. Luyao Zhang - CS290 Web Dev 
+//Winter 2017 - Week 9 Database Interactions and UI
+
 //*****Express stuff*********
 var express = require('express');
 var app = express();
@@ -27,6 +30,8 @@ app.set('port', 3000);
 
 //*****Routes*************
 
+//This is the route called when the homepage is first visited, and when the
+//back button is pressed on the update page.
 app.get('/',function(req,res,next){
     var context = {};
     var subScript = "<script id=\"onStart\">window.addEventListener('load', function(){displayTable();});</script>";
@@ -35,6 +40,8 @@ app.get('/',function(req,res,next){
     res.render('home', context);
 });
 
+//This route grabs the table data and uses handlebars to update the table in
+//the home page.
 app.post('/getTable',function(req,res,next){
     var context = {};
     mysql.pool.query("SELECT * FROM exercises", function(err, rows, fields){
@@ -53,6 +60,8 @@ app.post('/getTable',function(req,res,next){
     });
 });
 
+//This route is called by the delete button on the home page. It removes
+//a row using data passed to it by the delete button.
 app.post('/remove', function(req,res,next){
     
     mysql.pool.query("DELETE FROM exercises WHERE id=" + req.body.rowId, function(err, rows, fields){
@@ -64,10 +73,9 @@ app.post('/remove', function(req,res,next){
     });
 });
 
+//This route gets called from the edit button on the home page. It takes 
+//the values from the home page and passes them onto the update page.
 app.post('/edit',function(req,res,next){
-    
-    console.log("entering /edit");
-    
     var data = JSON.parse(req.body.package);
     
     var date = data.date;
@@ -84,6 +92,9 @@ app.post('/edit',function(req,res,next){
     res.render('update', data);
 });
 
+//This route is called when a submission is made form the update page. It
+//takes values passed to it by the submit button, and updates the values
+//in the database accordingly.
 app.post('/update',function(req,res,next){
     console.log("entering /update");
     
@@ -108,7 +119,9 @@ app.post('/update',function(req,res,next){
     });
 });
 
-app.post('/notify',function(req,res,next){
+//This route is called by the submit button on the home page. It takes the values
+//passed to it and adds them to the database.
+app.post('/insert',function(req,res,next){
     var context = {};
     var data = req.body;
 
@@ -135,6 +148,7 @@ app.post('/notify',function(req,res,next){
 //    }
 });
 
+//This route is for resetting/setting-up the database table.
 app.get('/reset-table',function(req,res,next){
   var context = {};
   mysql.pool.query("DROP TABLE IF EXISTS workouts", function(err){ //replace your connection pool with the your variable containing the connection pool
