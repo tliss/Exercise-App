@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', bindButtons);
 
 function bindButtons(){
+    //*************If a new element is being submitted*************
     if (document.getElementById('Submit')) {
         document.getElementById('Submit').addEventListener('click', function(event){
 
@@ -17,31 +18,37 @@ function bindButtons(){
                 payload.lbs = parseInt(document.getElementById('lbsNo').value);
             }
 
-            req.open("POST", "http://localhost:3000/notify", true);
+            if (payload.name === "" || payload.reps === "" || document.getElementById('weight').value.length === 0 || document.getElementById('date').value.length === 0 || 
+                    (document.getElementById('lbsYes').checked===false && document.getElementById('lbsNo').checked===false)) {
+                alert("Fields cannot be left empty!");
+            } else {
+                req.open("POST", "http://localhost:3000/notify", true);
 
-            //when we get a response from our GET request...
-            req.addEventListener('load',function(){
-                if(req.status >= 200 && req.status < 400){
+                //when we get a response from our GET request...
+                req.addEventListener('load',function(){
+                    if(req.status >= 200 && req.status < 400){
 
-                    var response = JSON.parse(req.responseText);
+                        var response = JSON.parse(req.responseText);
 
-                    createTable(response);
+                        createTable(response);
 
-                }
-                else {
-                    console.log("Error in network request: " + req.statusText);
-                }
-            });
+                    }
+                    else {
+                        console.log("Error in network request: " + req.statusText);
+                    }
+                });
 
-            req.setRequestHeader('Content-Type', 'application/json');
+                req.setRequestHeader('Content-Type', 'application/json');
 
-            req.send(JSON.stringify(payload));
+                req.send(JSON.stringify(payload));
 
-            var form = document.getElementById('myField');
-            form.reset();
+                var form = document.getElementById('myField');
+                form.reset();
 
-            event.preventDefault();
+                event.preventDefault();
+            }
         });
+      //************If an update is being submitted***************
     } else if (document.getElementById('submitEdit')) {
         document.getElementById('submitEdit').addEventListener('click', function(event){
 
@@ -59,26 +66,33 @@ function bindButtons(){
                 payload.lbs = parseInt(document.getElementById('lbsNo').value);
             }
 
-            req.open("POST", "http://localhost:3000/update", true);
+            if (payload.name === "" || payload.reps === "" || document.getElementById('weight').value.length === 0 || document.getElementById('date').value.length === 0 || 
+                    (document.getElementById('lbsYes').checked===false && document.getElementById('lbsNo').checked===false)) {
+                alert("Fields cannot be left empty!");
+                window.location = "/";
+            } else {
 
-            //when we get a response from our GET request...
-            req.addEventListener('load',function(){
-                if(req.status >= 200 && req.status < 400){
+                req.open("POST", "http://localhost:3000/update", true);
 
-                    console.log("Returned!!!");
+                //when we get a response from our GET request...
+                req.addEventListener('load',function(){
+                    if(req.status >= 200 && req.status < 400){
 
-                    window.location = "/";
+                        console.log("Returned!!!");
 
-                }
-                else {
-                    console.log("Error in network request: " + req.statusText);
-                }
-            });
+                        window.location = "/";
 
-            req.setRequestHeader('Content-Type', 'application/json');
+                    }
+                    else {
+                        console.log("Error in network request: " + req.statusText);
+                    }
+                });
 
-            req.send(JSON.stringify(payload));
-            event.preventDefault();
+                req.setRequestHeader('Content-Type', 'application/json');
+
+                req.send(JSON.stringify(payload));
+                event.preventDefault();
+            }
         });
     }
 }
@@ -122,11 +136,7 @@ function createTable(response) {
         var newWeight = document.createElement("td");
         var newDate = document.createElement("td");
         var newLbs = document.createElement("td");
-        var newDeleteTd = document.createElement("td");
-        var newEditTd = document.createElement("td");
-        var newDelete = document.createElement("input");
-        var newFormDelete = document.createElement("form");
-
+        
         newId.textContent = row.id;
         newName.textContent = row.name;
         newReps.textContent = row.reps;
@@ -137,6 +147,12 @@ function createTable(response) {
         } else {
             newLbs.textContent = "Yes";
         }
+        
+        //*******DELETE BUTTON*******
+        var newDeleteTd = document.createElement("td");
+        var newEditTd = document.createElement("td");
+        var newDelete = document.createElement("input");
+        var newFormDelete = document.createElement("form");
         newDelete.type="submit";
         newDelete.value="Delete";
         newDelete.addEventListener('click', function(){
@@ -170,6 +186,8 @@ function createTable(response) {
             newEditForm.append(package);
             newEditForm.submit();
         });
+        
+        //****************************
         
         var newRow = document.createElement("tr");
 
