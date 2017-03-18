@@ -42,6 +42,44 @@ function bindButtons(){
 
             event.preventDefault();
         });
+    } else if (document.getElementById('submitEdit')) {
+        document.getElementById('submitEdit').addEventListener('click', function(event){
+
+            var req = new XMLHttpRequest();
+
+            var payload = {};
+            payload.id = parseInt(document.getElementById('id').value);
+            payload.name = document.getElementById('name').value;
+            payload.reps = parseInt(document.getElementById('reps').value);
+            payload.weight = parseInt(document.getElementById('weight').value);
+            payload.date = document.getElementById('date').value;
+            if (document.getElementById('lbsYes').checked){
+                payload.lbs = parseInt(document.getElementById('lbsYes').value);
+            } else {
+                payload.lbs = parseInt(document.getElementById('lbsNo').value);
+            }
+
+            req.open("POST", "http://localhost:3000/update", true);
+
+            //when we get a response from our GET request...
+            req.addEventListener('load',function(){
+                if(req.status >= 200 && req.status < 400){
+
+                    console.log("Returned!!!");
+
+                    window.location = "/";
+
+                }
+                else {
+                    console.log("Error in network request: " + req.statusText);
+                }
+            });
+
+            req.setRequestHeader('Content-Type', 'application/json');
+
+            req.send(JSON.stringify(payload));
+            event.preventDefault();
+        });
     }
 }
 

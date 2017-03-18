@@ -66,9 +66,9 @@ app.post('/remove', function(req,res,next){
 
 app.post('/edit',function(req,res,next){
     
-    var data = JSON.parse(req.body.package);
+    console.log("entering /edit");
     
-    console.log(data.lbs);
+    var data = JSON.parse(req.body.package);
     
     var date = data.date;
     date = moment(date).format('YYYY-MM-DD');
@@ -84,21 +84,36 @@ app.post('/edit',function(req,res,next){
     res.render('update', data);
 });
 
+app.post('/update',function(req,res,next){
+    console.log("entering /update");
+    
+    var data = req.body;
+    
+    console.log(data);
+
+    var createString ="UPDATE exercises SET" +
+            " name='" + data.name + 
+            "', reps=" + data.reps + 
+            ", weight=" + data.weight + 
+            ", date='" + data.date + 
+            "', lbs=" + data.lbs + 
+            " WHERE id=" + data.id;
+    
+    console.log(createString);
+
+    mysql.pool.query(createString, function(err, rows, fields){
+        if (err){
+            next(err);
+            return;
+        }
+        res.send(null);
+    });
+});
+
 app.post('/notify',function(req,res,next){
     var context = {};
     var data = req.body;
-//    var reject = false;
-//    
-//    for (var item in data){
-//        if (item === null){
-//            reject = true;
-//        }
-//    }
-//    
-//    if (reject === false) {
-//        console.log("Invalid Entry");
-//        //Fill this in later
-//    } else {
+
     mysql.pool.query("INSERT INTO exercises SET ?", data, function(err, rows, fields){
         if (err){
             next(err);
